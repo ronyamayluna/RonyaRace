@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] float delaySecondsThree = 5f;
     [SerializeField] GameObject canvasStartText;
 
+    [SerializeField] GameObject winCanvas;
+    [SerializeField] TMPro.TextMeshProUGUI winText;
 
     void Start()
     {
@@ -100,5 +102,32 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(6f);
         canvasStartText.SetActive(false);
     }
+
+    private void OnEnable()
+    {
+        CheckpointManager.OnCheckpointResult += HandleCheckpointResult;
+    }
+
+    private void OnDisable()
+    {
+        CheckpointManager.OnCheckpointResult -= HandleCheckpointResult;
+    }
+
+    private void ShowWinScreen(int player)
+    {
+        Time.timeScale = 0f;
+        winCanvas.SetActive(true);
+        winText.text = $"PLAYER {player} WINS!";
+    }
+
+
+    private void HandleCheckpointResult(int player, Status status)
+    {
+        if (status == Status.WIN)
+        {
+            ShowWinScreen(player);
+        }
+    }
+
 }
 

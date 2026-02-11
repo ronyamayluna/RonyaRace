@@ -4,9 +4,9 @@ using System.Collections;
 public class Choose1perGameOrTwo : MonoBehaviour
 {
 
-    [SerializeField] private float displayImageDuration = 5f;
-    [SerializeField] float fadeDuration = 1f;
-    public CanvasGroup exitBackgroundImageCanvasGroup;
+    // [SerializeField] private float displayImageDuration = 5f;
+    // [SerializeField] float fadeDuration = 1f;
+    // public CanvasGroup exitBackgroundImageCanvasGroup;
 
 //    void Start()
 //    {
@@ -15,15 +15,15 @@ public class Choose1perGameOrTwo : MonoBehaviour
 
 //    private IEnumerator ShowCanvasForSeconds()
 //    {
-//        // Показываем канвас
+//        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //        exitBackgroundImageCanvasGroup.alpha = 1f;
 //        exitBackgroundImageCanvasGroup.interactable = true;
 //        exitBackgroundImageCanvasGroup.blocksRaycasts = true;
 
-//        // Ждём заданное время
+//        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //        yield return new WaitForSeconds(displayImageDuration);
 
-//        // Скрываем канвас
+//        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //        exitBackgroundImageCanvasGroup.alpha = 0f;
 //        exitBackgroundImageCanvasGroup.interactable = false;
 //        exitBackgroundImageCanvasGroup.blocksRaycasts = false;
