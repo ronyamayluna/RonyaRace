@@ -19,6 +19,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject winCanvas;
     [SerializeField] TMPro.TextMeshProUGUI winText;
 
+    [SerializeField] GameObject wrongStartCanvasPlayerOne;
+    [SerializeField] GameObject wrongStartCanvasPlayerTwo;
+
+    [SerializeField] GameObject wrongOrderCanvasPlayerOne;
+    [SerializeField] GameObject wrongOrderCanvasPlayerTwo;
+
+    [SerializeField] GameObject winCanvasPlayerOne;
+    [SerializeField] GameObject winCanvasPlayerTwo;
+
+    [SerializeField] GameObject QuitCanvas;
+
+    public static bool RaceStarted { get; private set; } = false;
+
+
     void Start()
     {
         Time.timeScale = 0f;
@@ -28,6 +42,12 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+
+        canvasstart.SetActive(false);
+        Time.timeScale = 1f;
+
+        RaceStarted = false;
+
         Debug.Log("StartGame");
         canvasstart.SetActive(false);
         Debug.Log("ttt");
@@ -37,7 +57,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ShowCanvasThreeWithDelay(canvasThree, delaySecondsThree));
         StartCoroutine(CloseCanvasThreeWithDelay(canvasThree, 5f));
         StartCoroutine(CloseCanvasStartWithDelay(canvasStartText, 6f));
-        
+
     }
 
     void Update()
@@ -45,6 +65,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StopGame();
+
         }
     }
 
@@ -56,8 +77,9 @@ public class UIManager : MonoBehaviour
     public void StopGame()
     {
         canvasStop.SetActive(true);
+        QuitCanvas.SetActive(true);
         Time.timeScale = 0f;
-        
+
     }
 
     public void CloseStopUI()
@@ -78,6 +100,7 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delaySecondsOne);
         canvasOne.SetActive(true);
+
     }
     IEnumerator ShowCanvasTwoWithDelay(GameObject canvas, float delaySeconds)
     {
@@ -101,6 +124,8 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         canvasStartText.SetActive(false);
+
+        RaceStarted = true;
     }
 
     private void OnEnable()
@@ -116,16 +141,74 @@ public class UIManager : MonoBehaviour
     private void ShowWinScreen(int player)
     {
         Time.timeScale = 0f;
-        winCanvas.SetActive(true);
-        winText.text = $"PLAYER {player} WINS!";
+        if (player == 1)
+        {
+            winCanvasPlayerOne.SetActive(true);
+            winCanvasPlayerTwo.SetActive(false);
+        }
+        else if (player == 2)
+        {
+            winCanvasPlayerTwo.SetActive(true);
+            winCanvasPlayerOne.SetActive(false);
+        }
+        // winText.text = $"{player} WINS!";
     }
 
+    private void ShowWrongStartScreen(int player)
+    {
+        if (player == 1)
+        {
+            wrongStartCanvasPlayerOne.SetActive(true);
+        }
+        else
+        {
+            wrongStartCanvasPlayerTwo.SetActive(true);
+        }
+    }
+
+    private void ShowWrongOrderScreen(int player)
+    {
+        if (player == 1)
+        {
+            wrongOrderCanvasPlayerOne.SetActive(true);
+        }
+        else
+        {
+            wrongOrderCanvasPlayerTwo.SetActive(true);
+        }
+    }
+
+    private void HideWrongScreen(int player)
+    {
+        if (player == 1)
+        {
+            wrongStartCanvasPlayerOne.SetActive(false);
+            wrongOrderCanvasPlayerOne.SetActive(false);
+        }
+        else
+        {
+            wrongStartCanvasPlayerTwo.SetActive(false);
+            wrongOrderCanvasPlayerTwo.SetActive(false);
+        }
+    }
 
     private void HandleCheckpointResult(int player, Status status)
     {
         if (status == Status.WIN)
         {
             ShowWinScreen(player);
+        }
+        else if (status == Status.WRONG_START)
+        {
+            ShowWrongStartScreen(player);
+        }
+        else if (status == Status.WRONG_ORDER)
+        {
+            ShowWrongOrderScreen(player);
+        }
+        else if (status == Status.CORRECT_ORDER)
+        {
+            HideWrongScreen(player);
         }
     }
 

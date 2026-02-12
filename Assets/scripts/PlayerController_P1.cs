@@ -17,10 +17,16 @@ public class PlayerController_P1 : MonoBehaviour
     [SerializeField] AudioClip _carSound;
     [SerializeField] AudioSource _carSoundSource;
 
+    private bool raceFinished = false;
+
 
     // Update is called once per frame
     void Update()
     {
+        if (!UIManager.RaceStarted) return;
+        if (raceFinished) return;
+        
+
         horisontalinput = Input.GetAxis("Horizontal_P1");
         verticalinput = Input.GetAxis("Vertical_P1");
         forwardinput = Input.GetAxis("Fire3_P1");
@@ -64,12 +70,29 @@ public class PlayerController_P1 : MonoBehaviour
             // Немного меняем тональность в зависимости от скорости
             _carSoundSource.pitch = 1f + Mathf.Abs(verticalinput) * 0.5f;
         }
-        else
+        else if (_carSoundSource.isPlaying)
         {
-            if (_carSoundSource.isPlaying)
-            {
-                _carSoundSource.Stop();
-            }
+            _carSoundSource.Stop();
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        CheckpointManager.OnCheckpointResult += HandleRaceResult;
+    }
+
+    private void OnDisable()
+    {
+        CheckpointManager.OnCheckpointResult -= HandleRaceResult;
+    }
+
+    private void HandleRaceResult(int player, Status status)
+    {
+        if (status == Status.WIN)
+        {
+            raceFinished = true;
+            _carSoundSource.Stop();
         }
     }
 }

@@ -24,7 +24,7 @@ public class Checkpoint : MonoBehaviour
         switch (status)
         {
             case Status.WIN:
-                Debug.Log($"Player {player} WIN!");
+                Debug.Log($"{player} WIN!");
                 break;
 
             case Status.CORRECT_ORDER:

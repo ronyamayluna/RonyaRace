@@ -19,14 +19,14 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightControl) & thirdPersonCamera == true)
+        if (Input.GetKeyDown(KeyCode.RightAlt) & thirdPersonCamera == true)
         {
             thirdPersonCamera = false;
             thirdPersonCam.enabled = false;
             firstPersonCam.enabled = true;
 
         }
-        else if (Input.GetKeyDown(KeyCode.RightControl) & thirdPersonCamera == false)
+        else if (Input.GetKeyDown(KeyCode.RightAlt) & thirdPersonCamera == false)
         {
             thirdPersonCamera = true;
             thirdPersonCam.enabled = true;
