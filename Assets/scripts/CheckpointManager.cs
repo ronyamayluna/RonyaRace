@@ -17,6 +17,7 @@ public class CheckpointManager : MonoBehaviour
     private List<int> playerOneStack = new();
     private List<int> playerTwoStack = new();
 
+
     private readonly int[] correctOrder = { 0, 1, 2, 3, 4, 5, 6, 7, 0 };
 
     public static event Action<int, Status> OnCheckpointResult;
@@ -55,12 +56,11 @@ public class CheckpointManager : MonoBehaviour
             return Status.CORRECT_ORDER;
         }
 
-        // 🔥 Если порядок нарушен, но игрок вернулся назад
         int correctIndex = Array.IndexOf(correctOrder, checkpointNumber);
 
         if (correctIndex >= 0 && correctIndex < list.Count)
         {
-            // Обрезаем хвост
+
             list.RemoveRange(correctIndex, list.Count - correctIndex);
 
             list.Add(checkpointNumber);
@@ -69,7 +69,6 @@ public class CheckpointManager : MonoBehaviour
             return Status.CORRECT_ORDER;
         }
 
-        // Иначе — неправильный порядок
         OnCheckpointResult?.Invoke(player, Status.WRONG_ORDER);
         return Status.WRONG_ORDER;
     }
